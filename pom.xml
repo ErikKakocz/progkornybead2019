@@ -32,6 +32,29 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                    <Main-Class>${app.main.class}</Main-Class>
+                    <X-Compile-Source-JDK>${maven.compile.source}</X-Compile-Source-JDK>
+                    <X-Compile-Target-JDK>${maven.compile.target}</X-Compile-Target-JDK>
+                  </manifestEntries>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.openclover</groupId>
         <artifactId>clover-maven-plugin</artifactId>
         <executions>
@@ -54,7 +77,6 @@
             </goals>
             <configuration>
               <rules>
-                <level>ERROR</level>
                 <requireMavenVersion>
                   <version>3.6.0</version>
                 </requireMavenVersion>
@@ -95,7 +117,7 @@
        <groupId>org.apache.maven.plugins</groupId>
        <artifactId>maven-checkstyle-plugin</artifactId>
        <version>3.0.0</version>
-       
+
        <configuration>
          <configlocation>checkstyle.xml</configlocation>
          <encoding>UTF-8</encoding>

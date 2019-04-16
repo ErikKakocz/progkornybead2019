@@ -1,4 +1,4 @@
-package hu.inf.unideb;
+package hu.inf.unideb.test;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
