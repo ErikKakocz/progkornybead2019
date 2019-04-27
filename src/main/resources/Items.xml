@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+    Template for item elements
+    <item id=0>
+        <weight></weight>
+        <name></name>
+    </item>
+ -->
+
+
+<items>
+    <item id = 1>
+        <weight>1.5</weight>
+        <name>stick</name>
+    </item>
+    <item id = 2>
+        <weight>1.5</weight>
+        <name>handle</name>
+    </item>
+    <item id = 3>
+        <weight>1.5</weight>
+        <name>bow handle</name>
+    </item>
+    <item id = 4>
+        <weight>3</weight>
+        <name>heavy handle</name>
+    </item>
+    <item id = 5>
+        <weight>10</weight>
+        <name>metal ingot</name>
+    </item>
+    <item id = 6>
+        <weight>1</weight>
+        <name>metal chunk</name>
+    </item>
+    <item id = 7>
+        <weight>0.5</weight>
+        <name>metal arrowhead</name>
+    </item>
+    <item id = 8>
+        <weight>1.5</weight>
+        <name>metal short blade</name>
+    </item>
+    <item id = 9>
+        <weight>2.5</weight>
+        <name>metal blade</name>
+    </item>
+    <item id = 10>
+        <weight>7</weight>
+        <name>metal heavy blade</name>
+    </item>
+    <item id = 11>
+        <weight>0.5</weight>
+        <name>metal arrowhead</name>
+    </item>
+    <item id = 12>
+        <weight>0.5</weight>
+        <name>metal arrowhead</name>
+    </item>
+
+
+</items>

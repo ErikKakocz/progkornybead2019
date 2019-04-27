@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+    Template for weapon elements    
+    <weapon id="0">
+        <weight></weight>
+        <name></name>
+        <attack></attack>
+        <speed></speed>
+        <type></type>
+    </weapon>
+-->
+
+<weapons>
+    <weapon id="0">
+        <weight></weight>
+        <name></name>
+        <attack></attack>
+        <speed></speed>
+        <type></type>
+    </weapon>
+
+
+
+
+
+
+
+
+
+</weapons>
