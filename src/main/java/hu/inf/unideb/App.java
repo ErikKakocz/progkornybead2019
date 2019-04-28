@@ -14,12 +14,15 @@ public final class App {
     private App() {
     }
 
+    
+    
     /**
-     * The main Function.
+     * The main Function. Takes instructions from the user and executes them.
      *
-     * @param args The arguments of the application.
+     * @param args The argument vector of the application.
      */
     public static void main(final String[] args) {
-        System.out.println("Hello World!");
+        System.out.println("Awaiting instructions:");
+        
     }
 }
