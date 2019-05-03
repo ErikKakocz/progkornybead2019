@@ -11,7 +11,7 @@ public class Item {
     /**
      * The maximum durability an item can have.
      */
-    private static final int MAXIMUM_DURABILITY = 100;
+    public static final int MAXIMUM_DURABILITY = 100;
 
     /**
      * The minimal weight an item can have.
@@ -27,7 +27,7 @@ public class Item {
      * The weight of the item. A player can only hold a predefined amount of
      * items in his/her inventory.
      */
-    private int weight;
+    private double weight;
 
     /**
      * The durability of the item. Show how much the item can be used before
@@ -61,7 +61,7 @@ public class Item {
      * @param itemDurability The initial durability of the item.
      * @param itemName The name of the item to instantiate.
      */
-    public Item(final int itemId, final int itemWeight,
+    public Item(final int itemId, final double itemWeight,
             final int itemDurability, final String itemName) {
         super();
         this.id = itemId;
@@ -106,7 +106,7 @@ public class Item {
      * Getter for the item's weight field.
      * @return The weight of the item.
      */
-    public final int getWeight() {
+    public final double getWeight() {
         return weight;
     }
 

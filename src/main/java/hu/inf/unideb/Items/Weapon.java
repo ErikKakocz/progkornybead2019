@@ -22,7 +22,7 @@ public class Weapon extends Item {
      * can attack with the weapon.
      */
     private double speed;
-    
+
     /**
      * The type of the weapon.
      */
@@ -31,17 +31,28 @@ public class Weapon extends Item {
     /**
      * Public parameterless constructor for the weapon class.
      */
-    Weapon() {
+    public Weapon() {
         this.attack = 1;
     }
 
     /**
      * Public constructor for the weapon class.
      *
+     * @param id the unique id of the weapon.
+     * @param weight the weight of the weapon.
+     * @param durability The durability of the weapon.
+     * @param name The name of the weapon object.
      * @param weaponAttack The Base damage this weapon deals.
+     * @param wspeed The attack speed of the weapon object.
+     * @param wtype The type of the weapon object.
      */
-    Weapon(final double weaponAttack) {
+    public Weapon(final int id, final double weight, final int durability,
+                  final String name, final double weaponAttack,
+                  final double wspeed, final WeaponType wtype) {
+        super(id, weight, durability, name);
         this.attack = weaponAttack;
+        this.speed = wspeed;
+        this.type = wtype;
     }
 
     /**

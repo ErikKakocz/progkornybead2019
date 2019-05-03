@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+    Template for armor elements    
+    <armor id="0">
+        <weight></weight>
+        <name></name>
+        <damageReduction></damageReduction>
+        <movementImpairment></movementImpairment>
+    </armor>
+-->
