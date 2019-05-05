@@ -8,3 +8,29 @@
         <movementImpairment></movementImpairment>
     </armor>
 -->
+<armors>
+    <armor id="a_0">
+        <weight>0.6</weight>
+        <name>Casual cloth</name>
+        <damageReduction>5</damageReduction>
+        <movementImpairment>5</movementImpairment>
+    </armor>
+    <armor id="a_1">
+        <weight>2.3</weight>
+        <name>Light armor</name>
+        <damageReduction>20</damageReduction>
+        <movementImpairment>15</movementImpairment>
+    </armor>
+    <armor id="a_2">
+        <weight>4</weight>
+        <name>Medium armor</name>
+        <damageReduction>35</damageReduction>
+        <movementImpairment>30</movementImpairment>
+    </armor>
+    <armor id="a_3">
+        <weight>8</weight>
+        <name>Heavy armor</name>
+        <damageReduction>60</damageReduction>
+        <movementImpairment>45</movementImpairment>
+    </armor>
+</armors>

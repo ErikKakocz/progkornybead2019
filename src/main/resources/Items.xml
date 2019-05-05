@@ -50,13 +50,19 @@
         <name>metal heavy blade</name>
     </item>
     <item id = "11">
-        <weight>0.5</weight>
-        <name>metal arrowhead</name>
+        <weight>0.3</weight>
+        <name>cloth</name>
     </item>
     <item id = "12">
-        <weight>0.5</weight>
-        <name>metal arrowhead</name>
+        <weight>2</weight>
+        <name>metal plate</name>
     </item>
-
-
+    <item id = "13">
+        <weight>4</weight>
+        <name>heavy metal plate</name>
+    </item>
+    <item id = "14">
+        <weight>0.5</weight>
+        <name>String</name>
+    </item>
 </items>

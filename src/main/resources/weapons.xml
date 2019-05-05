@@ -11,20 +11,25 @@
 -->
 
 <weapons>
-    <weapon id="0">
-        <weight></weight>
-        <name></name>
-        <attack></attack>
-        <speed></speed>
-        <type></type>
+    <weapon id="w_0">
+        <weight>3</weight>
+        <name>Moebious dagger</name>
+        <attack>15</attack>
+        <speed>50</speed>
+        <type>DAGGER</type>
     </weapon>
-
-
-
-
-
-
-
-
-
+    <weapon id="w_1">
+        <weight>4</weight>
+        <name>Sword of Yadun</name>
+        <attack>30</attack>
+        <speed>35</speed>
+        <type>SWORD</type>
+    </weapon>
+    <weapon id="w_2">
+        <weight>10</weight>
+        <name>Heavy Saber</name>
+        <attack>50</attack>
+        <speed>10</speed>
+        <type>LONGSWORD</type>
+    </weapon>
 </weapons>
