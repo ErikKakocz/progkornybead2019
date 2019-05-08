@@ -22,8 +22,9 @@ public final class App {
     /**
      * Prompt prompting the player to give a command.
      */
-    private static final String PROMPTSTRING = "Make a choice:\n1.,Instantiate"
-            + " an item\n2.,See inventory\n3.,Crafting\n4.,quit";
+    private static final String PROMPTSTRING = "Make a choice:\n1.,Add an item"
+            + " to inventory\n2.,See inventory\n3.,Crafting\n4.Repair item"
+            + "\n5.,Brew a potion\n6.,quit";
 
     /**
      * The number of the instantiation command.
@@ -41,9 +42,20 @@ public final class App {
     private static final int CRAFTINGCOMMANDNUMBER = 3;
 
     /**
+     * The number of the repair command..
+     */
+    private static final int REPAIRCOMMANDNUMBER = 4;
+
+
+    /**
+     * The number of the brewing command..
+     */
+    private static final int BREWINGCOMMANDNUMBER = 5;
+
+    /**
      * The number of the command quitting the application.
      */
-    private static final int QUITCOMMANDNUMBER = 4;
+    private static final int QUITCOMMANDNUMBER = 6;
 
     /**
      * Dummy constructor to prevent instantiation of main class.
@@ -76,6 +88,7 @@ public final class App {
                                 + " " + i.getDurability()
                                 + "% " + i.getWeight());
             }
+            System.out.println("Total weight of the items: "+inv.getCarriedWeight());
         } else {
             System.out.println("The inventory has no items.");
         }
@@ -105,7 +118,7 @@ public final class App {
                         int id = Integer.parseInt(reader.readLine());
                         inventory.addItem(itemInstantiation(id));
                     } catch (TooMuchItemsException e) {
-                        logger.warn("The player has too much items.");
+                        logger.warn("The players inventory has too much weight.");
                     }
                     break;
                 case INVENTORYSHOWCOMMANDNUMBER:
@@ -113,6 +126,12 @@ public final class App {
                     break;
                 case CRAFTINGCOMMANDNUMBER:
                     System.out.println("crafting");
+                    break;
+                case REPAIRCOMMANDNUMBER:
+                    System.out.println("repairing");
+                    break;
+                case BREWINGCOMMANDNUMBER:
+                    System.out.println("brewing");
                     break;
                 case QUITCOMMANDNUMBER:
                     running = false;

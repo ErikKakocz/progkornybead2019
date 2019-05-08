@@ -32,4 +32,25 @@
         <speed>10</speed>
         <type>LONGSWORD</type>
     </weapon>
+    <weapon id="w_3">
+        <weight>3</weight>
+        <name>Staff of the Yamabushies</name>
+        <attack>30</attack>
+        <speed>30</speed>
+        <type>STAFF</type>
+    </weapon>
+    <weapon id="w_4">
+        <weight>2</weight>
+        <name>Wooden Bow</name>
+        <attack>25</attack>
+        <speed>35</speed>
+        <type>BOW</type>
+    </weapon>
+    <weapon id="w_5">
+        <weight>10</weight>
+        <name>Wooden Crossbow</name>
+        <attack>50</attack>
+        <speed>15</speed>
+        <type>CROSSBOW</type>
+    </weapon>
 </weapons>

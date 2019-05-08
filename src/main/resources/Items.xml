@@ -65,4 +65,12 @@
         <weight>0.5</weight>
         <name>String</name>
     </item>
+    <item id = "15">
+        <weight>4.5</weight>
+        <name>Crossbow Handle</name>
+    </item>
+    <item id = "16">
+        <weight>0.5</weight>
+        <name>metal piece</name>
+    </item>
 </items>

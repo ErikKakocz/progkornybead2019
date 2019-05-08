@@ -1,6 +1,7 @@
 package hu.inf.unideb.itemOperations;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -84,6 +85,10 @@ public class ItemFactory {
         }
     }
 
+    public ArrayList<Recipe> getRecipes(){
+        ArrayList<Recipe> recipes=new ArrayList<Recipe>();
+        return recipes;
+    }
     /**
      * Instantiates an item using the xml document containing the attributes of
      * the items.
