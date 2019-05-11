@@ -11,7 +11,7 @@ Template for recipes
 <Recipes>
     <recipe>
         <componentOneID>1</componentOneID>
-        <componentTwoID></componentTwoID>
+        <componentTwoID>-1</componentTwoID>
         <itemId>2</itemId>
         <amount>1</amount>
     </recipe>
@@ -29,19 +29,19 @@ Template for recipes
     </recipe>
     <recipe>
         <componentOneID>5</componentOneID>
-        <componentTwoID></componentTwoID>
+        <componentTwoID>-1</componentTwoID>
         <itemId>6</itemId>
         <amount>10</amount>
     </recipe>
     <recipe>
         <componentOneID>6</componentOneID>
-        <componentTwoID></componentTwoID>
+        <componentTwoID>-1</componentTwoID>
         <itemId>16</itemId>
         <amount>2</amount>
     </recipe>
     <recipe>
         <componentOneID>6</componentOneID>
-        <componentTwoID></componentTwoID>
+        <componentTwoID>-1</componentTwoID>
         <itemId>7</itemId>
         <amount>2</amount>
     </recipe>
@@ -59,7 +59,7 @@ Template for recipes
     </recipe>
     <recipe>
         <componentOneID>5</componentOneID>
-        <componentTwoID></componentTwoID>
+        <componentTwoID>-1</componentTwoID>
         <itemId>10</itemId>
         <amount>1</amount>
     </recipe>
@@ -84,61 +84,61 @@ Template for recipes
     <recipe>
         <componentOneID>2</componentOneID>
         <componentTwoID>8</componentTwoID>
-        <itemId>w_0</itemId>
+        <itemId>21</itemId>
         <amount>1</amount>
     </recipe>
     <recipe>
         <componentOneID>2</componentOneID>
         <componentTwoID>9</componentTwoID>
-        <itemId>w_1</itemId>
+        <itemId>22</itemId>
         <amount>1</amount>
     </recipe>
     <recipe>
         <componentOneID>4</componentOneID>
         <componentTwoID>7</componentTwoID>
-        <itemId>w_2</itemId>
+        <itemId>23</itemId>
         <amount>1</amount>
     </recipe>
     <recipe>
         <componentOneID>2</componentOneID>
         <componentTwoID>2</componentTwoID>
-        <itemId>w_3</itemId>
+        <itemId>24</itemId>
         <amount>1</amount>
     </recipe>
     <recipe>
         <componentOneID>3</componentOneID>
         <componentTwoID>14</componentTwoID>
-        <itemId>w_4</itemId>
+        <itemId>25</itemId>
         <amount>1</amount>
     </recipe>
     <recipe>
         <componentOneID>14</componentOneID>
         <componentTwoID>15</componentTwoID>
-        <itemId>w_5</itemId>
+        <itemId>26</itemId>
         <amount>1</amount>
     </recipe>
     <recipe>
         <componentOneID>11</componentOneID>
         <componentTwoID>11</componentTwoID>
-        <itemId>a_0</itemId>
+        <itemId>17</itemId>
         <amount>1</amount>
     </recipe>
     <recipe>
         <componentOneID>11</componentOneID>
         <componentTwoID>12</componentTwoID>
-        <itemId>a_1</itemId>
+        <itemId>18</itemId>
         <amount>1</amount>
     </recipe>
     <recipe>
         <componentOneID>12</componentOneID>
         <componentTwoID>12</componentTwoID>
-        <itemId>a_2</itemId>
+        <itemId>19</itemId>
         <amount>1</amount>
     </recipe>
     <recipe>
         <componentOneID>13</componentOneID>
         <componentTwoID>13</componentTwoID>
-        <itemId>a_3</itemId>
+        <itemId>20</itemId>
         <amount>1</amount>
     </recipe>
 </Recipes>

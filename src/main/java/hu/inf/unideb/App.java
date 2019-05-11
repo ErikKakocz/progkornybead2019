@@ -9,6 +9,7 @@ import hu.inf.unideb.Items.Inventory;
 import hu.inf.unideb.Items.Item;
 import hu.inf.unideb.Items.TooMuchItemsException;
 import hu.inf.unideb.itemOperations.ItemFactory;
+import hu.inf.unideb.itemOperations.ItemTinkering;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,6 +96,14 @@ public final class App {
         System.out.println();
     }
 
+    public static void printCraftables(final Inventory inv) {
+        ItemTinkering tinkerer=new ItemTinkering();
+        System.out.println(tinkerer.getCraftableItems(inv));
+    }
+
+    public static void craftItem() {
+        
+    }
     /**
      * The main Function. Takes instructions from the user and executes them.
      *
@@ -125,7 +134,8 @@ public final class App {
                     printOutInventory(inventory);
                     break;
                 case CRAFTINGCOMMANDNUMBER:
-                    System.out.println("crafting");
+                    printCraftables(inventory);
+                    craftItem();
                     break;
                 case REPAIRCOMMANDNUMBER:
                     System.out.println("repairing");

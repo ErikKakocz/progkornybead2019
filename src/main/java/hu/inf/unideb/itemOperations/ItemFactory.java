@@ -53,40 +53,82 @@ public class ItemFactory {
     private static final int FIFTHITEMCHILD = 9;
 
     /**
-     * DocumentBuilder object used to get a jaxp documentbuilder instance.
-     */
-    private DocumentBuilderFactory dFactory;
-
-    /**
-     * A jaxp DocumentBuilder instance used to parse the xml.
-     */
-    private DocumentBuilder builder;
-
-    /**
-     * Document object representing the xml document from which itemFactory
-     * class instantiates the items.
-     */
-    private Document doc;
-
-    /**
      * Logger used for logging.
      */
-    private static Logger logger = LoggerFactory.getLogger(ItemFactory.class);
+    private static Logger logger;
 
     /**
      * public constructor for ItemFactory class.
      */
     public ItemFactory() {
-        dFactory = DocumentBuilderFactory.newInstance();
+        logger = LoggerFactory.getLogger(ItemFactory.class);
+    }
+
+    private NodeList getNodesFromDocument(int num) {
+        DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder;
+        NodeList nodes=null;
         try {
             builder = dFactory.newDocumentBuilder();
+            ClassLoader classLoader = this.getClass().getClassLoader();
+            Document doc;
+            switch(num) {
+                case 0:doc=builder.parse(classLoader
+                        .getResourceAsStream("Items.xml"));
+                       nodes=doc.getElementsByTagName("item");
+                       break;
+                case 1:doc=builder.parse(classLoader
+                        .getResourceAsStream("weapons.xml"));
+                       nodes=doc.getElementsByTagName("weapon");
+                       break;
+                case 2:doc=builder.parse(classLoader
+                        .getResourceAsStream("armors.xml"));
+                       nodes=doc.getElementsByTagName("armor");
+                       break;
+                case 3:doc=builder.parse(classLoader
+                        .getResourceAsStream("recipes.xml"));
+                       nodes=doc.getElementsByTagName("recipe");
+                       break;
+            }
+        } catch (SAXException e) {
+            logger.error(e.getMessage());
+        } catch (IOException e) {
+            logger.error(e.getMessage());
         } catch (ParserConfigurationException e) {
             logger.error(e.getMessage());
         }
+        return nodes;
     }
+
+    public String getItemNameById(int id) {
+        NodeList nodes=null;
+        for(int i=0;i<3;i++)
+            nodes=getNodesFromDocument(i);
+            for(int j=0;j<nodes.getLength();j++) {
+                Element e=(Element)nodes.item(j);
+                if(Integer.parseInt(e.getAttribute("id"))==id) {
+                    return e.getChildNodes().item(SECONDITEMCHILD)
+                            .getNodeValue();
+                }
+            }
+        
+        return null;
+    }
+
 
     public ArrayList<Recipe> getRecipes(){
         ArrayList<Recipe> recipes=new ArrayList<Recipe>();
+        NodeList nodes = getNodesFromDocument(3);
+        for(int i=0;i<nodes.getLength();i++) {
+            Element element=(Element)nodes.item(i);
+            NodeList cn = element.getChildNodes();
+            Recipe recipe=new Recipe(
+            Integer.parseInt((cn.item(FIRSTITEMCHILD).getFirstChild().getNodeValue())),
+            Integer.parseInt((cn.item(SECONDITEMCHILD).getFirstChild().getNodeValue())),
+            Integer.parseInt((cn.item(THIRDITEMCHILD).getFirstChild().getNodeValue())),
+            Integer.parseInt((cn.item(FOURTHITEMCHILD).getFirstChild().getNodeValue())));
+            recipes.add(recipe);
+        }
         return recipes;
     }
     /**
@@ -97,11 +139,8 @@ public class ItemFactory {
      * @return The instantiated item.
      */
     public final Item instantiateItem(final int id) {
-        ClassLoader classLoader = this.getClass().getClassLoader();
         Item item = null;
-        try {
-            doc = builder.parse(classLoader.getResourceAsStream("Items.xml"));
-            NodeList items = doc.getElementsByTagName("item");
+        NodeList items = getNodesFromDocument(0);
             for (int i = 0; i < items.getLength(); i++) {
                 Element element = (Element) items.item(i);
                 if (Integer.parseInt((element).getAttribute("id")) == id) {
@@ -115,12 +154,6 @@ public class ItemFactory {
                                     getNodeValue());
                 }
             }
-        } catch (SAXException e) {
-            logger.error("InstantiateItem method threw SAXException.");
-        } catch (IOException e) {
-            logger.error("InstantiateItem method threw IOException.");
-        }
-
         return item;
     }
 
@@ -147,7 +180,6 @@ public class ItemFactory {
         } else {
             return null;
         }
-
     }
 
     /**
@@ -159,61 +191,50 @@ public class ItemFactory {
      * @return A {@link Weapon} object
      */
     public final Weapon instantiateWeapon(final int id, final int durability) {
-        ClassLoader classLoader = this.getClass().getClassLoader();
         Weapon weapon = null;
-        try {
-            doc = builder.parse(classLoader.getResourceAsStream("Weapons.xml"));
-            NodeList items = doc.getElementsByTagName("weapon");
-            for (int i = 0; i < items.getLength(); i++) {
-                Element element = (Element) items.item(i);
-                if (Integer.parseInt((element).getAttribute("id")) == id) {
-                    int iId = Integer.parseInt(element.getAttribute("id"));
-                    NodeList n = element.getChildNodes();
-                    String w = n.item(FIRSTITEMCHILD).getFirstChild().
-                                getNodeValue();
-                    String name = n.item(SECONDITEMCHILD).getFirstChild().
-                                getNodeValue();
-                    double attack = Double.parseDouble(n.item(THIRDITEMCHILD).
-                                    getFirstChild().getNodeValue());
-                    double speed = Double.parseDouble(n.item(FOURTHITEMCHILD).
-                                    getFirstChild().getNodeValue());
-                    WeaponType type = getType(n.item(FIFTHITEMCHILD).
-                                    getFirstChild().getNodeValue());
-                    weapon = new Weapon(iId, Double.parseDouble(w),
-                                        durability, name, attack, speed, type);
-                }
+        NodeList items = getNodesFromDocument(1);
+        for (int i = 0; i < items.getLength(); i++) {
+            Element element = (Element) items.item(i);
+            if (Integer.parseInt((element).getAttribute("id")) == id) {
+                int iId = Integer.parseInt(element.getAttribute("id"));
+                NodeList n = element.getChildNodes();
+                String w = n.item(FIRSTITEMCHILD).getFirstChild().
+                            getNodeValue();
+                String name = n.item(SECONDITEMCHILD).getFirstChild().
+                            getNodeValue();
+                double attack = Double.parseDouble(n.item(THIRDITEMCHILD).
+                                getFirstChild().getNodeValue());
+                double speed = Double.parseDouble(n.item(FOURTHITEMCHILD).
+                                getFirstChild().getNodeValue());
+                WeaponType type = getType(n.item(FIFTHITEMCHILD).
+                                getFirstChild().getNodeValue());
+                weapon = new Weapon(iId, Double.parseDouble(w),
+                                    durability, name, attack, speed, type);
             }
-        } catch (Exception e) {
-            logger.error(e.getMessage());
         }
+        
         return weapon;
     }
 
     public final Armor instantiateArmor(final int id, final int durability) {
-        ClassLoader classLoader = this.getClass().getClassLoader();
         Armor armor = null;
-        try {
-            doc = builder.parse(classLoader.getResourceAsStream("Weapons.xml"));
-            NodeList items = doc.getElementsByTagName("weapon");
-            for (int i = 0; i < items.getLength(); i++) {
-                Element element = (Element) items.item(i);
-                if (Integer.parseInt((element).getAttribute("id")) == id) {
-                    int iId = Integer.parseInt(element.getAttribute("id"));
-                    NodeList n = element.getChildNodes();
-                    String w = n.item(FIRSTITEMCHILD).getFirstChild().
-                                getNodeValue();
-                    String name = n.item(SECONDITEMCHILD).getFirstChild().
-                                getNodeValue();
-                    int damageRed = Integer.parseInt(n.item(THIRDITEMCHILD).
-                                    getFirstChild().getNodeValue());
-                    int movImp = Integer.parseInt(n.item(FOURTHITEMCHILD).
-                                    getFirstChild().getNodeValue());
-                    armor = new Armor(iId, Double.parseDouble(w),
-                                      durability, name, damageRed, movImp);
-                }
+        NodeList items = getNodesFromDocument(2);
+        for (int i = 0; i < items.getLength(); i++) {
+            Element element = (Element) items.item(i);
+            if (Integer.parseInt((element).getAttribute("id")) == id) {
+                int iId = Integer.parseInt(element.getAttribute("id"));
+                NodeList n = element.getChildNodes();
+                String w = n.item(FIRSTITEMCHILD).getFirstChild().
+                            getNodeValue();
+                String name = n.item(SECONDITEMCHILD).getFirstChild().
+                            getNodeValue();
+                int damageRed = Integer.parseInt(n.item(THIRDITEMCHILD).
+                                getFirstChild().getNodeValue());
+                int movImp = Integer.parseInt(n.item(FOURTHITEMCHILD).
+                                getFirstChild().getNodeValue());
+                armor = new Armor(iId, Double.parseDouble(w),
+                                  durability, name, damageRed, movImp);
             }
-        } catch (Exception e) {
-            logger.error(e.getMessage());
         }
         return armor;
     }
