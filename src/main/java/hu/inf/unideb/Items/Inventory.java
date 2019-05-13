@@ -43,6 +43,8 @@ public class Inventory {
         backpack = new ArrayList<Item>();
         carriedWeight = 0.0;
         maximumWeight = DEFAULT_MAXIMUM_WEIGHT;
+        backpack.add(new Item());
+        backpack.add(new Item());
     }
     /**
      * public constructor for the inventory class. The carriedWeight is
@@ -56,6 +58,8 @@ public class Inventory {
         backpack = new ArrayList<Item>();
         carriedWeight = 0.0;
         maximumWeight = maxWeight;
+        backpack.add(new Item());
+        backpack.add(new Item());
     }
 
 
@@ -69,6 +73,9 @@ public class Inventory {
             throws TooMuchItemsException {
         if (carriedWeight + itemToAdd.getWeight() <= maximumWeight) {
             backpack.add(itemToAdd);
+            if(backpack.get(0).getName().equals("Dummy")) {
+                backpack.remove(0);
+            }
             carriedWeight += itemToAdd.getWeight();
         } else {
             throw new TooMuchItemsException();

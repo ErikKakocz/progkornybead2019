@@ -43,11 +43,11 @@ public class Item {
 
     /**
      * public parameterless constructor for the item class. It initializes an
-     * item with the id -1, a weight of 0, a durability of 100% and the name
+     * item with the id -2, a weight of 0, a durability of 100% and the name
      * "Dummy".
      */
     public Item() {
-        this.id = -1;
+        this.id = -2;
         this.weight = MINIMAL_WEIGHT;
         this.durability = MAXIMUM_DURABILITY;
         this.name = "Dummy";

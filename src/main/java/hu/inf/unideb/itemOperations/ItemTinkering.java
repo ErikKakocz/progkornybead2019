@@ -29,27 +29,35 @@ public class ItemTinkering {
         ItemFactory factory=new ItemFactory();
         ArrayList<Item> items = inv.getBackpackItems();
         ArrayList<Recipe> recipes=factory.getRecipes();
-        String result=null;
+        String result="";
         for(int i=0;i<items.size();i++) {
             Item itemOne=items.get(i);
-            for(int j=i+1;j<items.size();j++) {
+            for(int j=i;j<items.size();j++) {
                 Item itemTwo=items.get(j);
                 for(Recipe recipe:recipes) {
+                    //logger.info(recipe.toString());
                     int idOne=itemOne.getId();
                     int idTwo=itemTwo.getId();
-                    if(recipe.getIngredientOneId()==idOne &&
-                        (recipe.getIngredientTwoId()==idTwo||
-                        recipe.getIngredientTwoId()==-1)) {
+                    if(j==i) {
+                        idTwo=-2;
+                    }
+                    if(recipe.getIngredientOneId()==idOne) {
+                        if(recipe.getIngredientTwoId()==-1) {
+                            result=result+"id:"+recipe.getItemId()+". "+
+                                    itemOne.getName()+"->"+
+                                    factory.getItemNameById(recipe.getItemId())+
+                                    "\n";
+                        }else if(recipe.getIngredientTwoId()==idTwo) {
                         result=result+"id:"+recipe.getItemId()+". "+
                                 itemOne.getName()+"+"+
                                 itemTwo.getName()+"->"+
                                 factory.getItemNameById(recipe.getItemId())+
                                 "\n";
+                        }
                     }
                 }
             }
         }
-        
         return result;
     }
 

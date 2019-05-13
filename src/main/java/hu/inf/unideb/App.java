@@ -82,12 +82,14 @@ public final class App {
      */
     private static void printOutInventory(final Inventory inv) {
         ArrayList<Item> items = inv.getBackpackItems();
+        System.out.println("Player's Inventory:");
         if (items.size() > 0) {
-            System.out.println("Player's Inventory:");
             for (Item i : items) {
-                System.out.println("--" + i.getName()
-                                + " " + i.getDurability()
-                                + "% " + i.getWeight());
+                if(i.getId()!=-2) {
+                    System.out.println("--" + i.getName()
+                                    + " " + i.getDurability()
+                                    + "% " + i.getWeight());
+                }
             }
             System.out.println("Total weight of the items: "+inv.getCarriedWeight());
         } else {
@@ -98,11 +100,15 @@ public final class App {
 
     public static void printCraftables(final Inventory inv) {
         ItemTinkering tinkerer=new ItemTinkering();
-        System.out.println(tinkerer.getCraftableItems(inv));
+        String list=tinkerer.getCraftableItems(inv);
+        System.out.println(list);
+        if(list=="") {
+            System.out.println("No availible craftings");
+        }
     }
 
     public static void craftItem() {
-        
+        ItemTinkering tinkerer=new ItemTinkering();
     }
     /**
      * The main Function. Takes instructions from the user and executes them.

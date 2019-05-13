@@ -102,16 +102,18 @@ public class ItemFactory {
 
     public String getItemNameById(int id) {
         NodeList nodes=null;
-        for(int i=0;i<3;i++)
+        for(int i=0;i<3;i++) {
             nodes=getNodesFromDocument(i);
             for(int j=0;j<nodes.getLength();j++) {
                 Element e=(Element)nodes.item(j);
+                logger.info(e.getChildNodes().item(SECONDITEMCHILD)
+                        .getFirstChild().getNodeValue());
                 if(Integer.parseInt(e.getAttribute("id"))==id) {
                     return e.getChildNodes().item(SECONDITEMCHILD)
-                            .getNodeValue();
+                            .getFirstChild().getNodeValue();
                 }
             }
-        
+        }
         return null;
     }
 
