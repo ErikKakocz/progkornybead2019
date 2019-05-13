@@ -78,7 +78,7 @@ public class Recipe {
         this.itemId = itemId;
     }
 
-    /* (non-Javadoc)
+    /** 
      * @see java.lang.Object#toString()
      */
     @Override

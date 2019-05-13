@@ -61,36 +61,59 @@ public class ItemTinkering {
         return result;
     }
 
-    public Inventory craftItem(final Item ingredientOne,
-            final Item ingredientTwo,final Inventory inv) {
+    public Inventory craftItem(final int id,final Inventory inv) {
         ItemFactory factory=new ItemFactory();
-        ArrayList<Recipe> recipes=factory.getRecipes();
-        int idOne=ingredientOne.getId();
-        int idTwo=ingredientTwo.getId();
-        for(int i=0;i<recipes.size();i++) {
-            if(recipes.get(i).getIngredientOneId()==idOne &&
-               recipes.get(i).getIngredientTwoId()==idTwo) {
-                inv.getBackpackItems().remove(ingredientOne);
-                inv.getBackpackItems().remove(ingredientTwo);
-                int id=recipes.get(i).getItemId();
-                int itemDurability=(int)Math.ceil((double)
-                        (ingredientOne.getDurability()
-                        +ingredientTwo.getDurability()/2)*1.2);
-                Item item=factory.instantiateItem(id);
-                if(item==null)
-                    item=factory.instantiateWeapon(id,itemDurability);
-                if(item==null)
-                    item=factory.instantiateArmor(id,itemDurability);
-                if(item==null)
-                    break;
-                try {
-                    inv.addItem(item);
-                } catch (TooMuchItemsException e) {
-                    logger.error(e.getMessage()+"Crafting didn't succeed.");
-                }
+        Recipe recipe = factory.getCraftingRecipeById(id);
+        ArrayList<Item> backpack=inv.getBackpackItems();
+        int ItemIndexOne=-1;
+        int ItemIdOne=-1;
+        int ItemIndexTwo=-1;
+        int ItemIdTwo=-1;
+        for(int i=0;i<backpack.size();i++) {
+            logger.info("Looking for first ingredient: "+i);
+            int itemId=backpack.get(i).getId();
+            if(itemId==recipe.getIngredientOneId()) {
+                logger.info("found first ingredient at: "+i);
+                ItemIndexOne=i;
+                ItemIdOne=itemId;
+                break;
             }
         }
+        for(int i=0;i<backpack.size();i++) {
+            logger.info("Looking for second ingredient: "+i);
+            int itemId=backpack.get(i).getId();
+            if(itemId==recipe.getIngredientTwoId()&&
+                    ItemIndexOne!=i ) {
+                logger.info("found second ingredient at: "+i);
+                ItemIndexTwo=i;
+                ItemIdTwo=itemId;
+                break;
+            }
+        }
+        logger.info(ItemIdOne+" "+recipe.getIngredientOneId()+" "+
+                ItemIdTwo+" "+recipe.getIngredientTwoId());
+        if(ItemIdOne==recipe.getIngredientOneId()&&
+                ItemIdTwo==recipe.getIngredientTwoId()) {
+            logger.info("We have everything");
+            Item item=factory.create(id);
+            inv.dropItem(ItemIndexOne);
+            if(ItemIndexTwo>-1) {
+                inv.dropItem(ItemIndexTwo);
+            }
+            try {
+                inv.addItem(item);
+            } catch (TooMuchItemsException e) {
+                logger.info("Inventory is full");
+            }
+            
+        }
+        logger.info("Crafting in progress");
         return inv;
+    }
+
+    public Item repairItem(Item item) {
+        item.setDurability(100);
+        return item;
     }
 }
 

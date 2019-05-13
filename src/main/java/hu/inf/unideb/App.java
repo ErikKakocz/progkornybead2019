@@ -72,7 +72,7 @@ public final class App {
     private static Item itemInstantiation(final int id) {
         ItemFactory factory = new ItemFactory();
         System.out.println();
-        return factory.instantiateItem(id);
+        return factory.create(id);
     }
 
     /**
@@ -83,12 +83,14 @@ public final class App {
     private static void printOutInventory(final Inventory inv) {
         ArrayList<Item> items = inv.getBackpackItems();
         System.out.println("Player's Inventory:");
+        int counter=1;
         if (items.size() > 0) {
             for (Item i : items) {
                 if(i.getId()!=-2) {
-                    System.out.println("--" + i.getName()
+                    System.out.println(counter+".--" + i.getName()
                                     + " " + i.getDurability()
                                     + "% " + i.getWeight());
+                    counter++;
                 }
             }
             System.out.println("Total weight of the items: "+inv.getCarriedWeight());
@@ -98,18 +100,54 @@ public final class App {
         System.out.println();
     }
 
-    public static void printCraftables(final Inventory inv) {
+    /**
+     * Writes out the possible items that could be crafted from the ingredients
+     * present in this instance of inventory.
+     * @param inv The inventory which contains the ingredients for crafting.
+     * @throws NoCraftablesException If nothing could be crafted from the
+     * given items.
+     */
+    public static void printCraftables(final Inventory inv) 
+            throws NoCraftablesException {
         ItemTinkering tinkerer=new ItemTinkering();
         String list=tinkerer.getCraftableItems(inv);
         System.out.println(list);
         if(list=="") {
             System.out.println("No availible craftings");
+            throw new NoCraftablesException();
         }
+        
     }
 
-    public static void craftItem() {
+    /**
+     * Crafts an item using the ItemTinkerer class's craftItem method.
+     * @param id the id of the item to craft.
+     * @param inv The inventory that contains the crafting materials.
+     * @return The inventory with the newly crafted item and without the
+     * ingredients used in the crafting.  
+     */
+    public static Inventory craftItem(final int id,final Inventory inv) {
         ItemTinkering tinkerer=new ItemTinkering();
+        return tinkerer.craftItem(id, inv);
     }
+
+    /**
+     * Repairs an item in the players inventory using the ItemTinkerer class's
+     * repair method.
+     * @param inv the inventory that contains the item to repair
+     * @param index the index of the item to repair
+     * @return The inventory with the repaired item.
+     */
+    public static Inventory Repair(Inventory inv,int index) {
+        ItemTinkering tinkerer=new ItemTinkering();
+        try {
+            inv.addItem(tinkerer.repairItem(inv.dropItem(index)));
+        } catch (TooMuchItemsException e) {
+            
+        }
+        return inv;
+    }
+
     /**
      * The main Function. Takes instructions from the user and executes them.
      *
@@ -140,14 +178,24 @@ public final class App {
                     printOutInventory(inventory);
                     break;
                 case CRAFTINGCOMMANDNUMBER:
+                    System.out.println("Please give an item ID:");
+                    try {
                     printCraftables(inventory);
-                    craftItem();
+                    }catch(NoCraftablesException e) {
+                        logger.info("There are no craftables!");
+                        break;
+                    }
+                    int id = Integer.parseInt(reader.readLine());
+                    inventory=craftItem(id,inventory);
                     break;
                 case REPAIRCOMMANDNUMBER:
-                    System.out.println("repairing");
-                    break;
-                case BREWINGCOMMANDNUMBER:
-                    System.out.println("brewing");
+                    System.out.println("Select item to repair:(-1 to exit)");
+                    printOutInventory(inventory);
+                    int index = Integer.parseInt(reader.readLine());
+                    if(index<0) {
+                        break;
+                    }
+                    Repair(inventory, index);
                     break;
                 case QUITCOMMANDNUMBER:
                     running = false;
