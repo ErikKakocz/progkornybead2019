@@ -68,33 +68,33 @@ public class ItemFactory {
      * Gets a NodeList from one of the xml documents in the resources folder
      * depending on which is needed.
      * @param num The number of the document.
-     * @return A NodeList containing the children of the root element of the 
+     * @return A NodeList containing the children of the root element of the
      * xml document specified by num.
      */
-    private NodeList getNodesFromDocument(int num) {
+    private NodeList getNodesFromDocument(final int num) {
         DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
-        NodeList nodes=null;
+        NodeList nodes = null;
         try {
             builder = dFactory.newDocumentBuilder();
             ClassLoader classLoader = this.getClass().getClassLoader();
             Document doc;
-            switch(num) {
-                case 0:doc=builder.parse(classLoader
+            switch (num) {
+                case 0:doc = builder.parse(classLoader
                         .getResourceAsStream("Items.xml"));
-                       nodes=doc.getElementsByTagName("item");
+                       nodes = doc.getElementsByTagName("item");
                        break;
-                case 1:doc=builder.parse(classLoader
+                case 1:doc = builder.parse(classLoader
                         .getResourceAsStream("weapons.xml"));
-                       nodes=doc.getElementsByTagName("weapon");
+                       nodes = doc.getElementsByTagName("weapon");
                        break;
-                case 2:doc=builder.parse(classLoader
+                case 2:doc = builder.parse(classLoader
                         .getResourceAsStream("armors.xml"));
-                       nodes=doc.getElementsByTagName("armor");
+                       nodes = doc.getElementsByTagName("armor");
                        break;
-                case 3:doc=builder.parse(classLoader
+                default:doc = builder.parse(classLoader
                         .getResourceAsStream("recipes.xml"));
-                       nodes=doc.getElementsByTagName("recipe");
+                       nodes = doc.getElementsByTagName("recipe");
                        break;
             }
         } catch (SAXException e) {
@@ -113,10 +113,10 @@ public class ItemFactory {
      * the recipe.
      * @return A Recipe object.
      */
-    public Recipe getCraftingRecipeById(final int id) {
+    public final Recipe getCraftingRecipeById(final int id) {
         Recipe result = new Recipe();
-        NodeList nodes=getNodesFromDocument(3);
-        for(int i=0;i<nodes.getLength();i++) {
+        NodeList nodes = getNodesFromDocument(3);
+        for(int i = 0;i<nodes.getLength();i++) {
             Element element=(Element)nodes.item(i);
             NodeList cn=element.getChildNodes();
             if(Integer.parseInt((cn.item(THIRDITEMCHILD)
@@ -145,7 +145,7 @@ public class ItemFactory {
      * @param id The id of the item.
      * @return The name of the item.
      */
-    public String getItemNameById(int id) {
+    public String getNameById(int id) {
         NodeList nodes=null;
         for(int i=0;i<3;i++) {
             nodes=getNodesFromDocument(i);
@@ -238,7 +238,6 @@ public class ItemFactory {
      * {@link ItemTinkering} class.
      *
      * @param id The id of the weapon to instantiate.
-     * @param durability The durability of the weapon to instantiate.
      * @return A {@link Weapon} object
      */
     public final Weapon instantiateWeapon(final int id) {
@@ -267,6 +266,12 @@ public class ItemFactory {
         return weapon;
     }
 
+    /**
+     * Instantiates a {@link Armor} object. This method is used by the
+     * {@link ItemTinkering} class.
+     * @param id The unique id of the {@link Armor} object to instantiate.
+     * @return An {@link Armor} object.
+     */
     public final Armor instantiateArmor(final int id) {
         Armor armor = null;
         NodeList items = getNodesFromDocument(2);
@@ -290,6 +295,12 @@ public class ItemFactory {
         return armor;
     }
 
+    /**
+     * Uses either {@link instantiateItem},{@link instantiateWeapon} or
+     * {@link instantiateArmor} method to Instantiate an {@link item} object.
+     * @param id The id of the item to instantiate.
+     * @return An {@link Item} object.
+     */
     public final Item create(final int id) {
         Item item=instantiateItem(id);
         if(item==null) {

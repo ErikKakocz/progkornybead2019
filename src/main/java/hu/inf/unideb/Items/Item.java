@@ -19,6 +19,11 @@ public class Item {
     private static final int MINIMAL_WEIGHT = 0;
 
     /**
+     * The id of the Dummy object.
+     */
+    private static final int DUMMYID = -2;
+
+    /**
      * The unique ID of the item.
      */
     private int id;
@@ -47,7 +52,7 @@ public class Item {
      * "Dummy".
      */
     public Item() {
-        this.id = -2;
+        this.id = DUMMYID;
         this.weight = MINIMAL_WEIGHT;
         this.durability = MAXIMUM_DURABILITY;
         this.name = "Dummy";

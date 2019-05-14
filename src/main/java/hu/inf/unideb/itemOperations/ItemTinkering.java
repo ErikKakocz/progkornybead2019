@@ -21,38 +21,53 @@ public class ItemTinkering {
      */
     private static Logger logger;
 
+    /**
+     * Constructor for the class.
+     */
     public ItemTinkering() {
         logger = LoggerFactory.getLogger(ItemTinkering.class);
     }
 
-    public String getCraftableItems(Inventory inv) {
-        ItemFactory factory=new ItemFactory();
+    /**
+     * Creates a list of all the items the layer can craft from the items
+     * in the inventory.
+     * @param inv The {@link Inventory} containing the crafting ingredients.
+     * @return A string with all the craftable items and their ingredients.
+     */
+    public final String getCraftableItems(final Inventory inv) {
+        ItemFactory factory = new ItemFactory();
         ArrayList<Item> items = inv.getBackpackItems();
-        ArrayList<Recipe> recipes=factory.getRecipes();
-        String result="";
-        for(int i=0;i<items.size();i++) {
-            Item itemOne=items.get(i);
-            for(int j=i;j<items.size();j++) {
-                Item itemTwo=items.get(j);
-                for(Recipe recipe:recipes) {
-                    //logger.info(recipe.toString());
-                    int idOne=itemOne.getId();
-                    int idTwo=itemTwo.getId();
-                    if(j==i) {
-                        idTwo=-2;
+        ArrayList<Recipe> recipes = factory.getRecipes();
+        ArrayList<Recipe> recipesToIgnore = new ArrayList<Recipe>();
+        String result = "";
+        for (int i = 0; i < items.size(); i++) {
+            Item itemOne = items.get(i);
+            for (int j = 0; j < items.size(); j++) {
+                Item itemTwo = items.get(j);
+                for (Recipe recipe:recipes) {
+                    if (recipesToIgnore.contains(recipe)) {
+                        continue;
                     }
-                    if(recipe.getIngredientOneId()==idOne) {
-                        if(recipe.getIngredientTwoId()==-1) {
-                            result=result+"id:"+recipe.getItemId()+". "+
-                                    itemOne.getName()+"->"+
-                                    factory.getItemNameById(recipe.getItemId())+
-                                    "\n";
-                        }else if(recipe.getIngredientTwoId()==idTwo) {
-                        result=result+"id:"+recipe.getItemId()+". "+
-                                itemOne.getName()+"+"+
-                                itemTwo.getName()+"->"+
-                                factory.getItemNameById(recipe.getItemId())+
-                                "\n";
+                    //logger.info(recipe.toString());
+                    int idOne = itemOne.getId();
+                    int idTwo = itemTwo.getId();
+                    if (j == i) {
+                        idTwo = -1;
+                    }
+                    if (recipe.getIngredientOneId() == idOne) {
+                        if (recipe.getIngredientTwoId() == -1) {
+                            result = result + "id:" + recipe.getItemId() + ". "
+                                    + itemOne.getName() + "->"
+                                    + factory.getNameById(recipe.getItemId())
+                                    + "\n";
+                            recipesToIgnore.add(recipe);
+                        } else if (recipe.getIngredientTwoId() == idTwo) {
+                            result = result + "id:" + recipe.getItemId() + ". "
+                                + itemOne.getName() + "+"
+                                + itemTwo.getName() + "->"
+                                + factory.getNameById(recipe.getItemId())
+                                + "\n";
+                            recipesToIgnore.add(recipe);
                         }
                     }
                 }
@@ -61,58 +76,56 @@ public class ItemTinkering {
         return result;
     }
 
-    public Inventory craftItem(final int id,final Inventory inv) {
-        ItemFactory factory=new ItemFactory();
+    /**
+     * Crafts an item using one ore two ingredients from the players inventory.
+     * @param id The id of the item to craft.
+     * @param inv The inventory containing the crafting ingredients.
+     * @return The inventory containing the crafted item.
+     */
+    public final Inventory craftItem(final int id, final Inventory inv) {
+        ItemFactory factory = new ItemFactory();
         Recipe recipe = factory.getCraftingRecipeById(id);
-        ArrayList<Item> backpack=inv.getBackpackItems();
-        int ItemIndexOne=-1;
-        int ItemIdOne=-1;
-        int ItemIndexTwo=-1;
-        int ItemIdTwo=-1;
-        for(int i=0;i<backpack.size();i++) {
-            logger.info("Looking for first ingredient: "+i);
-            int itemId=backpack.get(i).getId();
-            if(itemId==recipe.getIngredientOneId()) {
-                logger.info("found first ingredient at: "+i);
-                ItemIndexOne=i;
-                ItemIdOne=itemId;
-                break;
+        ArrayList<Item> backpack = inv.getBackpackItems();
+        Item itemOne = null;
+        Item itemTwo = null;
+        for (Item i:backpack) {
+            if (i.getId() == recipe.getIngredientOneId()) {
+                itemOne = i;
             }
         }
-        for(int i=0;i<backpack.size();i++) {
-            logger.info("Looking for second ingredient: "+i);
-            int itemId=backpack.get(i).getId();
-            if(itemId==recipe.getIngredientTwoId()&&
-                    ItemIndexOne!=i ) {
-                logger.info("found second ingredient at: "+i);
-                ItemIndexTwo=i;
-                ItemIdTwo=itemId;
-                break;
+        for (Item i:backpack) {
+            if (i.getId() == recipe.getIngredientTwoId()) {
+                itemTwo = i;
             }
         }
-        logger.info(ItemIdOne+" "+recipe.getIngredientOneId()+" "+
-                ItemIdTwo+" "+recipe.getIngredientTwoId());
-        if(ItemIdOne==recipe.getIngredientOneId()&&
-                ItemIdTwo==recipe.getIngredientTwoId()) {
+        if (itemOne.getId() == recipe.getIngredientOneId()
+                && itemTwo.getId() == recipe.getIngredientTwoId()) {
             logger.info("We have everything");
-            Item item=factory.create(id);
-            inv.dropItem(ItemIndexOne);
-            if(ItemIndexTwo>-1) {
-                inv.dropItem(ItemIndexTwo);
+            Item item;
+            inv.dropItem(backpack.indexOf(itemOne));
+            if (itemTwo != null) {
+                inv.dropItem(inv.getBackpackItems().indexOf(itemTwo));
             }
-            try {
-                inv.addItem(item);
-            } catch (TooMuchItemsException e) {
-                logger.info("Inventory is full");
+            for (int i = 0; i < recipe.getAmount(); i++) {
+                item = factory.create(id);
+                try {
+                    inv.addItem(item);
+                } catch (TooMuchItemsException e) {
+                    logger.info("Inventory is full");
+                }
             }
-            
         }
         logger.info("Crafting in progress");
         return inv;
     }
 
-    public Item repairItem(Item item) {
-        item.setDurability(100);
+    /**
+     * Restores the durability of an {@link Item} to 100%.
+     * @param item The {@link Item} to repair.
+     * @return The repaired {@link Item}.
+     */
+    public final Item repairItem(final Item item) {
+        item.setDurability(Item.MAXIMUM_DURABILITY);
         return item;
     }
 }

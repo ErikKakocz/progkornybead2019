@@ -95,7 +95,7 @@ Template for recipes
     </recipe>
     <recipe>
         <componentOneID>4</componentOneID>
-        <componentTwoID>7</componentTwoID>
+        <componentTwoID>10</componentTwoID>
         <itemId>23</itemId>
         <amount>1</amount>
     </recipe>

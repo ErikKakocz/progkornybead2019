@@ -1,91 +1,119 @@
 package hu.inf.unideb.itemOperations;
 
+/**
+ * Class representing crafting recipes.
+ * @author erik
+ *
+ */
 public class Recipe {
 
+    /**
+     * The unique id of the first ingredient needed to craft the item.
+     */
     private int ingredientOneId;
 
+    /**
+     * The unique id of the second ingredient needed to craft the item.
+     * In the case of items that are crafted from a single ingredient, this
+     * value is -1.
+     */
     private int ingredientTwoId;
 
+    /**
+     * The unique id of the item that can be crafted from this recipe.
+     */
     private int itemId;
-    
+
+    /**
+     * The amount of items that are created during crafting.
+     */
     private int amount;
-    
+
+    /**
+     * Parameterless constructor for the class.
+     */
     public Recipe() {
-        
+
     }
-    
-    public Recipe(final int ingOne,final int ingTwo,
-                   final int id,final int am) {
-        ingredientOneId=ingOne;
-        ingredientTwoId=ingTwo;
-        itemId=id;
-        amount=am;
+
+    /**
+     * Constructor for the class.
+     * @param ingOne The first ingredient of the crafting recipe.
+     * @param ingTwo The second ingredient of the crafting recipe.
+     * @param id The id of the crafted item.
+     * @param am The amount of the crafted items.
+     */
+    public Recipe(final int ingOne, final int ingTwo,
+                   final int id, final int am) {
+        ingredientOneId = ingOne;
+        ingredientTwoId = ingTwo;
+        itemId = id;
+        amount = am;
     }
 
     /**
      * @return the ingredientOneId
      */
-    public int getIngredientOneId() {
+    public final int getIngredientOneId() {
         return ingredientOneId;
     }
 
     /**
-     * @param ingredientOneId the ingredientOneId to set
+     * @param ingredientId the ingredientOneId to set
      */
-    public void setIngredientOneId(int ingredientOneId) {
-        this.ingredientOneId = ingredientOneId;
+    public final void setIngredientOneId(final int ingredientId) {
+        this.ingredientOneId = ingredientId;
     }
 
     /**
      * @return the ingredientTwoId
      */
-    public int getIngredientTwoId() {
+    public final int getIngredientTwoId() {
         return ingredientTwoId;
     }
 
     /**
-     * @param ingredientTwoId the ingredientTwoId to set
+     * @param ingredientId the ingredientTwoId to set
      */
-    public void setIngredientTwoId(int ingredientTwoId) {
-        this.ingredientTwoId = ingredientTwoId;
+    public final void setIngredientTwoId(final int ingredientId) {
+        this.ingredientTwoId = ingredientId;
     }
 
     /**
      * @return the amount
      */
-    public int getAmount() {
+    public final int getAmount() {
         return amount;
     }
 
     /**
-     * @param amount the amount to set
+     * @param am the amount to set
      */
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public final void setAmount(final int am) {
+        this.amount = am;
     }
 
     /**
      * @return the itemId
      */
-    public int getItemId() {
+    public final int getItemId() {
         return itemId;
     }
 
     /**
-     * @param itemId the itemId to set
+     * @param id the itemId to set
      */
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
+    public final void setItemId(final int id) {
+        this.itemId = id;
     }
 
-    /** 
+    /**
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString() {
-        return "Recipe [ingredientOneId=" + ingredientOneId + ", ingredientTwoId=" + ingredientTwoId + ", itemId="
+    public final String toString() {
+        return "Recipe [ingredientOneId=" + ingredientOneId 
+                + ", ingredientTwoId=" + ingredientTwoId + ", itemId="
                 + itemId + ", amount=" + amount + "]";
     }
-    
-    
 }

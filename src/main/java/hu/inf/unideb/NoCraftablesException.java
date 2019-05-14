@@ -2,7 +2,7 @@ package hu.inf.unideb;
 
 
 /**
- * Exception that is being thrown when the players inventory does not 
+ * Exception that is being thrown when the players inventory does not
  * contain items that could be used for crafting an item.
  * @author erik
  *

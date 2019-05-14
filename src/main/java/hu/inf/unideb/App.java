@@ -25,7 +25,7 @@ public final class App {
      */
     private static final String PROMPTSTRING = "Make a choice:\n1.,Add an item"
             + " to inventory\n2.,See inventory\n3.,Crafting\n4.Repair item"
-            + "\n5.,Brew a potion\n6.,quit";
+            + "\n5.,quit";
 
     /**
      * The number of the instantiation command.
@@ -47,16 +47,10 @@ public final class App {
      */
     private static final int REPAIRCOMMANDNUMBER = 4;
 
-
-    /**
-     * The number of the brewing command..
-     */
-    private static final int BREWINGCOMMANDNUMBER = 5;
-
     /**
      * The number of the command quitting the application.
      */
-    private static final int QUITCOMMANDNUMBER = 6;
+    private static final int QUITCOMMANDNUMBER = 5;
 
     /**
      * Dummy constructor to prevent instantiation of main class.

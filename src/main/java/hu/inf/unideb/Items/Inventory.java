@@ -73,7 +73,7 @@ public class Inventory {
             throws TooMuchItemsException {
         if (carriedWeight + itemToAdd.getWeight() <= maximumWeight) {
             backpack.add(itemToAdd);
-            if(backpack.get(0).getName().equals("Dummy")) {
+            if (backpack.get(0).getName().equals("Dummy")) {
                 backpack.remove(0);
             }
             carriedWeight += itemToAdd.getWeight();
