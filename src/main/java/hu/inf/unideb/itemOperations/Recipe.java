@@ -112,7 +112,7 @@ public class Recipe {
      */
     @Override
     public final String toString() {
-        return "Recipe [ingredientOneId=" + ingredientOneId 
+        return "Recipe [ingredientOneId=" + ingredientOneId
                 + ", ingredientTwoId=" + ingredientTwoId + ", itemId="
                 + itemId + ", amount=" + amount + "]";
     }

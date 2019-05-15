@@ -53,6 +53,29 @@ public class ItemFactory {
     private static final int FIFTHITEMCHILD = 9;
 
     /**
+     * The number used for accessing the file "Items.xml"
+     * by {@link getNodesFromDocument}.
+     */
+    private static final int ITEMSFILENUMBER = 0;
+
+    /**
+     * The number used for accessing the file "weapons.xml"
+     * by {@link getNodesFromDocument}.
+     */
+    private static final int WEAPONSFILESNUMBER = 1;
+
+    /**
+     * The number used for accessing the file "armors.xml"
+     * by {@link getNodesFromDocument}.
+     */
+    private static final int ARMORSFILENUMBER = 2;
+
+    /**
+     * The number used for accessing the file "recipes.xml"
+     * by {@link getNodesFromDocument}.
+     */
+    private static final int RECIPESFILENUMBER = 3;
+    /**
      * Logger used for logging.
      */
     private static Logger logger;
@@ -80,15 +103,15 @@ public class ItemFactory {
             ClassLoader classLoader = this.getClass().getClassLoader();
             Document doc;
             switch (num) {
-                case 0:doc = builder.parse(classLoader
+                case ITEMSFILENUMBER:doc = builder.parse(classLoader
                         .getResourceAsStream("Items.xml"));
                        nodes = doc.getElementsByTagName("item");
                        break;
-                case 1:doc = builder.parse(classLoader
+                case WEAPONSFILESNUMBER:doc = builder.parse(classLoader
                         .getResourceAsStream("weapons.xml"));
                        nodes = doc.getElementsByTagName("weapon");
                        break;
-                case 2:doc = builder.parse(classLoader
+                case ARMORSFILENUMBER:doc = builder.parse(classLoader
                         .getResourceAsStream("armors.xml"));
                        nodes = doc.getElementsByTagName("armor");
                        break;
@@ -115,12 +138,12 @@ public class ItemFactory {
      */
     public final Recipe getCraftingRecipeById(final int id) {
         Recipe result = new Recipe();
-        NodeList nodes = getNodesFromDocument(3);
-        for(int i = 0;i<nodes.getLength();i++) {
-            Element element=(Element)nodes.item(i);
-            NodeList cn=element.getChildNodes();
-            if(Integer.parseInt((cn.item(THIRDITEMCHILD)
-                    .getFirstChild().getNodeValue()))==id){
+        NodeList nodes = getNodesFromDocument(RECIPESFILENUMBER);
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Element element = (Element) nodes.item(i);
+            NodeList cn = element.getChildNodes();
+            if (Integer.parseInt((cn.item(THIRDITEMCHILD)
+                    .getFirstChild().getNodeValue())) == id) {
                 result.setIngredientOneId(Integer.parseInt(
                         (cn.item(FIRSTITEMCHILD).getFirstChild()
                          .getNodeValue())));
@@ -140,18 +163,18 @@ public class ItemFactory {
     }
 
     /**
-     * Looks up the name of an item in the xml documents in the resources 
+     * Looks up the name of an item in the xml documents in the resources
      * folder.
      * @param id The id of the item.
      * @return The name of the item.
      */
-    public String getNameById(int id) {
-        NodeList nodes=null;
-        for(int i=0;i<3;i++) {
-            nodes=getNodesFromDocument(i);
-            for(int j=0;j<nodes.getLength();j++) {
-                Element e=(Element)nodes.item(j);
-                if(Integer.parseInt(e.getAttribute("id"))==id) {
+    public final String getNameById(final int id) {
+        NodeList nodes = null;
+        for (int i = 0; i < RECIPESFILENUMBER; i++) {
+            nodes = getNodesFromDocument(i);
+            for (int j = 0; j < nodes.getLength(); j++) {
+                Element e = (Element) nodes.item(j);
+                if (Integer.parseInt(e.getAttribute("id")) == id) {
                     return e.getChildNodes().item(SECONDITEMCHILD)
                             .getFirstChild().getNodeValue();
                 }
@@ -162,20 +185,24 @@ public class ItemFactory {
 
     /**
      * Returns the crafting recipes from the "recipes.xml" file in the
-     * resources folder. 
+     * resources folder.
      * @return An ArrayList containing all the crafting recipes.
      */
-    public ArrayList<Recipe> getRecipes(){
-        ArrayList<Recipe> recipes=new ArrayList<Recipe>();
-        NodeList nodes = getNodesFromDocument(3);
-        for(int i=0;i<nodes.getLength();i++) {
-            Element element=(Element)nodes.item(i);
+    public final ArrayList<Recipe> getRecipes() {
+        ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+        NodeList nodes = getNodesFromDocument(RECIPESFILENUMBER);
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Element element = (Element) nodes.item(i);
             NodeList cn = element.getChildNodes();
-            Recipe recipe=new Recipe(
-            Integer.parseInt((cn.item(FIRSTITEMCHILD).getFirstChild().getNodeValue())),
-            Integer.parseInt((cn.item(SECONDITEMCHILD).getFirstChild().getNodeValue())),
-            Integer.parseInt((cn.item(THIRDITEMCHILD).getFirstChild().getNodeValue())),
-            Integer.parseInt((cn.item(FOURTHITEMCHILD).getFirstChild().getNodeValue())));
+            Recipe recipe = new Recipe(
+            Integer.parseInt((cn.item(FIRSTITEMCHILD)
+                    .getFirstChild().getNodeValue())),
+            Integer.parseInt((cn.item(SECONDITEMCHILD)
+                    .getFirstChild().getNodeValue())),
+            Integer.parseInt((cn.item(THIRDITEMCHILD)
+                    .getFirstChild().getNodeValue())),
+            Integer.parseInt((cn.item(FOURTHITEMCHILD)
+                    .getFirstChild().getNodeValue())));
             //logger.debug(recipe.toString());
             recipes.add(recipe);
         }
@@ -191,7 +218,7 @@ public class ItemFactory {
      */
     public final Item instantiateItem(final int id) {
         Item item = null;
-        NodeList items = getNodesFromDocument(0);
+        NodeList items = getNodesFromDocument(ITEMSFILENUMBER);
             for (int i = 0; i < items.getLength(); i++) {
                 Element element = (Element) items.item(i);
                 if (Integer.parseInt((element).getAttribute("id")) == id) {
@@ -242,7 +269,7 @@ public class ItemFactory {
      */
     public final Weapon instantiateWeapon(final int id) {
         Weapon weapon = null;
-        NodeList items = getNodesFromDocument(1);
+        NodeList items = getNodesFromDocument(WEAPONSFILESNUMBER);
         for (int i = 0; i < items.getLength(); i++) {
             Element element = (Element) items.item(i);
             if (Integer.parseInt((element).getAttribute("id")) == id) {
@@ -259,10 +286,10 @@ public class ItemFactory {
                 WeaponType type = getType(n.item(FIFTHITEMCHILD).
                                 getFirstChild().getNodeValue());
                 weapon = new Weapon(iId, Double.parseDouble(w),
-                                    100, name, attack, speed, type);
+                                    Item.MAXIMUM_DURABILITY, name, attack,
+                                    speed, type);
             }
         }
-        
         return weapon;
     }
 
@@ -274,7 +301,7 @@ public class ItemFactory {
      */
     public final Armor instantiateArmor(final int id) {
         Armor armor = null;
-        NodeList items = getNodesFromDocument(2);
+        NodeList items = getNodesFromDocument(ARMORSFILENUMBER);
         for (int i = 0; i < items.getLength(); i++) {
             Element element = (Element) items.item(i);
             if (Integer.parseInt((element).getAttribute("id")) == id) {
@@ -289,7 +316,8 @@ public class ItemFactory {
                 int movImp = Integer.parseInt(n.item(FOURTHITEMCHILD).
                                 getFirstChild().getNodeValue());
                 armor = new Armor(iId, Double.parseDouble(w),
-                                  100, name, damageRed, movImp);
+                                  Item.MAXIMUM_DURABILITY, name, damageRed,
+                                  movImp);
             }
         }
         return armor;
@@ -297,17 +325,17 @@ public class ItemFactory {
 
     /**
      * Uses either {@link instantiateItem},{@link instantiateWeapon} or
-     * {@link instantiateArmor} method to Instantiate an {@link item} object.
+     * {@link instantiateArmor} method to Instantiate an {@link Item} object.
      * @param id The id of the item to instantiate.
      * @return An {@link Item} object.
      */
     public final Item create(final int id) {
-        Item item=instantiateItem(id);
-        if(item==null) {
-            item=instantiateWeapon(id);
+        Item item = instantiateItem(id);
+        if (item == null) {
+            item = instantiateWeapon(id);
         }
-        if(item==null) {
-            item=instantiateArmor(id);
+        if (item == null) {
+            item = instantiateArmor(id);
         }
         return item;
     }

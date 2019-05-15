@@ -21,7 +21,7 @@ public class Item {
     /**
      * The id of the Dummy object.
      */
-    private static final int DUMMYID = -2;
+    public static final int DUMMYID = -2;
 
     /**
      * The unique ID of the item.
@@ -36,8 +36,7 @@ public class Item {
 
     /**
      * The durability of the item. Show how much the item can be used before
-     * becoming useless. In case of a {@link ConsumableItem} this shows the
-     * quantity of the item.
+     * becoming useless.
      */
     private int durability;
 
